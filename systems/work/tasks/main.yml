@@ -1,0 +1,3 @@
+---
+- name: Base Tasks
+  import_tasks: base.yml

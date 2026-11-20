@@ -1,0 +1,35 @@
+---
+name: lint
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Linters
+        run: |
+          pip install ansible-lint yamllint
+          npm install --global prettier
+          curl -fsSL https://just.systems/install.sh | bash -s -- --to /usr/local/bin
+
+      - name: Install Shell Tooling
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq shellcheck shfmt
+
+      - name: Lint
+        run: just lint

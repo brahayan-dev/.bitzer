@@ -1,0 +1,12 @@
+---
+- name: Life env
+  hosts: Workstation
+
+  vars:
+    host_profile: .life_profile
+    ghostty_config: built-in
+
+  roles:
+    - common
+    - macos
+    - life

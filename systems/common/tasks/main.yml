@@ -1,0 +1,9 @@
+---
+- name: Base Tasks
+  import_tasks: base.yml
+- name: Security Tasks
+  import_tasks: security.yml
+- name: Environment Tasks
+  import_tasks: environment.yml
+- name: Post Tasks
+  import_tasks: post.yml

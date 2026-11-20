@@ -1,0 +1,38 @@
+---
+- name: Install Dependencies
+  become: "{{ ansible_facts['os_family'] != 'Darwin' }}"
+  package:
+    name:
+      - lua
+      - git
+      - qpdf
+      - luajit
+      - fennel
+      - fnlfmt
+      - podman
+      - poppler
+      - ripgrep
+      - tree-sitter-cli
+      - rlwrap
+      - direnv
+      - sqlite
+      - nodejs
+      - opentofu
+      - visidata
+      - just
+    state: latest
+
+- name: Install Npm Dependencies
+  become: "{{ ansible_facts['os_family'] != 'Darwin' }}"
+  community.general.npm:
+    name: "{{ item }}"
+    global: true
+    state: latest
+  loop: "{{ npm_global_packages }}"
+
+- name: Install Pip Dependencies
+  ansible.builtin.pip:
+    name: yamllint
+    executable: pip3
+    extra_args: --user --break-system-packages
+    state: latest

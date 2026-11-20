@@ -1,0 +1,7 @@
+---
+- name: Token Tasks
+  import_tasks: token.yml
+- name: Environment Tasks
+  import_tasks: environment.yml
+- name: Base Tasks
+  import_tasks: base.yml

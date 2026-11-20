@@ -1,0 +1,10 @@
+---
+exclude_paths:
+  - systems/life/vars
+  - systems/linux/vars
+
+skip_list:
+  - fqcn[action-core]
+  - var-naming[no-role-prefix]
+  - package-latest
+  - command-instead-of-module

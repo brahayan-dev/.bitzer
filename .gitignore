@@ -1,0 +1,9 @@
+**/.vault_
+**/.become_
+**/.cursor
+**/.ansible
+**/.cpcache
+
+# Neovim (generated tree, bootstrap file tracked)
+files/nvim/lua/**
+!files/nvim/lua/plugins.lua

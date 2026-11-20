@@ -1,0 +1,8 @@
+---
+- name: Set Private Profile Symlink
+  ansible.builtin.file:
+    src: "{{ ansible_facts['user_dir'] }}/.bitzer/files/.private_profile"
+    dest: "{{ ansible_facts['user_dir'] }}/.private_profile"
+    state: link
+    force: true
+  notify: event_reload_zsh_files

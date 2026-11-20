@@ -1,0 +1,25 @@
+---
+- name: Stat Private Profile
+  ansible.builtin.stat:
+    path: "{{ ansible_facts['user_dir'] }}/.private_profile"
+  register: private_profile_stat
+
+- name: Remove Private Profile Symlink
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.private_profile"
+    state: absent
+  when: private_profile_stat.stat.exists and private_profile_stat.stat.islnk
+
+- name: Propagate API Tokens
+  ansible.builtin.lineinfile:
+    create: true
+    mode: "0600"
+    regexp: "^export {{ item.name }}=.*$"
+    line: "export {{ item.name }}={{ item.value }}"
+    path: "{{ ansible_facts['user_dir'] }}/.private_profile"
+  no_log: true
+  loop:
+    - { name: GITHUB_TOKEN, value: "{{ github_token }}" }
+    - { name: ANTHROPIC_API_KEY, value: "{{ anthropic_api_key }}" }
+    - { name: OLLAMA_API_KEY, value: "{{ ollama_api_key }}" }
+  notify: event_reload_zsh_files

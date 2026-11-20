@@ -1,0 +1,12 @@
+---
+- name: Work env
+  hosts: Workstation
+
+  vars:
+    host_profile: .work_profile
+    ghostty_config: built-in
+
+  roles:
+    - common
+    - macos
+    - work

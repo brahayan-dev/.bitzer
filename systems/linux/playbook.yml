@@ -1,0 +1,11 @@
+---
+- name: Linux env
+  hosts: Workstation
+
+  vars:
+    host_profile: .linux_profile
+    ghostty_config: linux
+
+  roles:
+    - common
+    - linux

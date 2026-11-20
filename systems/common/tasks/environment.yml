@@ -1,0 +1,66 @@
+---
+- name: Create Directories
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - .ssh
+    - .config
+    - .config/ghostty
+
+- name: Set Editor Symlinks
+  ansible.builtin.file:
+    src: "{{ ansible_facts['user_dir'] }}/.bitzer/files/{{ item }}"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/{{ item }}"
+    state: link
+    force: true
+  loop:
+    - nvim
+  notify: event_reload_zsh_files
+
+- name: Set Ghostty Symlink
+  ansible.builtin.file:
+    src: "{{ ansible_facts['user_dir'] }}/.bitzer/files/ghostty/{{ ghostty_config }}"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/ghostty/config"
+    state: link
+    force: true
+
+- name: Set Host Profile Symlink
+  ansible.builtin.file:
+    src: "{{ ansible_facts['user_dir'] }}/.bitzer/files/{{ host_profile }}"
+    dest: "{{ ansible_facts['user_dir'] }}/{{ host_profile }}"
+    state: link
+    force: true
+  notify: event_reload_zsh_files
+
+- name: Set Symlinks
+  ansible.builtin.file:
+    src: "{{ ansible_facts['user_dir'] }}/.bitzer/files/{{ item }}"
+    dest: "{{ ansible_facts['user_dir'] }}/{{ item }}"
+    state: link
+    force: true
+  loop:
+    - .zprofile
+    - .zshrc
+  notify: event_reload_zsh_files
+
+- name: Transpile Fennel
+  shell: >
+    nvim --headless
+    -c "lua vim.secure.trust({action='allow', path='.nfnl.fnl'})"
+    -c "lua require('nfnl.api')['compile-all-files'](vim.fn.getcwd())"
+    -c "qa"
+  args:
+    chdir: "{{ ansible_facts['user_dir'] }}/.config/nvim"
+  changed_when: true
+
+- name: Remove Stale Symlinks
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/{{ item }}"
+    state: absent
+  loop:
+    - .config/opencode
+    - .config/emacs
+    - .config/emacs-plus
+    - .config/eca
