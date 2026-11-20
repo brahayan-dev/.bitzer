@@ -1,17 +1,16 @@
 ---
 ghostty_config: built-in
 
-host_profile: .life_profile
-
 npm_global_packages:
+  - pyright
   - prettier
   - stylelint
   - typescript
   - http-server
   - js-beautify
+  - squint-cljs
   - bash-language-server
   - yaml-language-server
   - typescript-language-server
   - vscode-langservers-extracted
   - "@ansible/ansible-language-server"
-  - pyright
