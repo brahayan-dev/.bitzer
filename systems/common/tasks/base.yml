@@ -6,20 +6,19 @@
       - lua
       - git
       - qpdf
+      - just
       - luajit
       - fennel
       - fnlfmt
       - podman
-      - poppler
-      - ripgrep
-      - tree-sitter-cli
       - rlwrap
       - direnv
       - sqlite
       - nodejs
+      - ripgrep
       - opentofu
       - visidata
-      - just
+      - tree-sitter-cli
     state: latest
 
 - name: Install Npm Dependencies
