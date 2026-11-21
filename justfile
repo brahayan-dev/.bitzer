@@ -24,3 +24,7 @@ playbook := "systems/" + env_name + "/playbook.yml"
 # run formatters
 @fix:
     npx --yes prettier --write .
+
+# compile clojurescript
+@compile:
+    squint compile --paths ./extensions --output-dir ./.pi/extensions --extension .js
