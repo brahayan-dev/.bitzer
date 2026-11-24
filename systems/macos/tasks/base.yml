@@ -51,8 +51,8 @@
 - name: Install Common Cask Dependencies
   community.general.homebrew_cask:
     name:
-      - arc
       - ollama-app
+      - thebrowsercompany-dia
     state: latest
 
 - name: Check Pi Installation
