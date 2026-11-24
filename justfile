@@ -20,3 +20,11 @@ playbook := "systems/" + env_name + "/playbook.yml"
 @setup:
     ANSIBLE_CONFIG={{ cfg }} ansible-playbook -c local -i systems/hosts.ini \
       --vault-password-file systems/.vault_ --become-password-file systems/.become_ {{ playbook }}
+
+# run formatters
+@fix:
+    npx --yes prettier --write .
+
+# compile clojurescript
+@compile:
+    squint compile --paths ./extensions --output-dir ./.pi/extensions --extension .js

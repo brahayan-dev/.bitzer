@@ -29,11 +29,30 @@
       - lua-language-server
     state: latest
 
+- name: Enable Repositories On Brew
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - clojure/tools
+    - weavejester/brew
+    - borkdude/brew
+    - clojure-lsp/brew
+
+- name: Trust Non-Official Brew Taps
+  ansible.builtin.command: "brew trust --tap {{ item }}"
+  changed_when: false
+  loop:
+    - clojure/tools
+    - weavejester/brew
+    - borkdude/brew
+    - clojure-lsp/brew
+
 - name: Install Common Cask Dependencies
   community.general.homebrew_cask:
     name:
-      - arc
       - ollama-app
+      - thebrowsercompany-dia
     state: latest
 
 - name: Check Pi Installation

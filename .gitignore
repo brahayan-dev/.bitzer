@@ -4,6 +4,11 @@
 **/.ansible
 **/.cpcache
 
+# JavaScript & ClojureScript
+**/*.js
+.clj-kondo/
+.lsp/
+
 # Neovim (generated tree, bootstrap file tracked)
 files/nvim/lua/**
 !files/nvim/lua/plugins.lua
